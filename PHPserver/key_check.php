@@ -14,7 +14,7 @@ function key_check()
     
     $ext = preg_replace('/\s+/', '', $_POST["key"]);
     
-    return $key === $ext
+    return $key === $ext;
     
 }
 
