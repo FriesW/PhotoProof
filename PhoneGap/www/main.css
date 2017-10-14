@@ -1,0 +1,16 @@
+body
+{
+    background-color: grey;
+    margin: 0;
+}
+
+#img
+{
+    background-color: red;
+    background-size: contain;
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+}

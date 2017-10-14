@@ -3,9 +3,27 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+        
         <title>Blank App</title>
+        
+        <link rel="stylesheet" type="text/css" href="main.css" />
+        
     </head>
     <body>
+
+        <h1>V06</h1>
+        
+        <button onclick="getPhoto();"><h3>Pick Photo</h3></button>
+        <button onclick="capturePhoto();"><h3>Take Photo</h3></button>
+        
+        <div id="img"></div>
+        
         <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="main.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+    
     </body>
 </html>
