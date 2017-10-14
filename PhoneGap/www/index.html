@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-        <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'; media-src *; img-src * filesystem: data:">
+
         
         <title>Blank App</title>
         
@@ -12,13 +13,15 @@
     </head>
     <body>
 
-        <h1>V09</h1>
+        <h1>V24</h1>
         
         <button onclick="getPhoto();"><h3>Pick Photo</h3></button>
         <button onclick="capturePhoto();"><h3>Take Photo</h3></button>
         
         <div id="hash">Hello</div>
         <div id="img"></div>
+        
+        <canvas id="scratch" style="display:none;"></canvas>
         
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="sha256.js"></script>
