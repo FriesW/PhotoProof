@@ -13,6 +13,9 @@ function onDeviceReady() {
 function onPhotoLoadSuccess(imageData) {
     var dest = document.getElementById('img');
     dest.style.backgroundImage = "url(data:image/jpeg;base64," + imageData + ")";
+    
+    var hash = document.getElementById('hash');
+    hash.innerHTML = "Image hash: " + sha256['hex'](atob(imageData));
 }
 
 function onFail(message) {
