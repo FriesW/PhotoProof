@@ -1,3 +1,6 @@
+var POST = "http://ice.truman.edu/~wjf4578/PhotoProof/post.php";
+var KEY;
+
 document.addEventListener("deviceready", onDeviceReady, false);
 
 var pictureSource;
@@ -6,6 +9,19 @@ var destinationType;
 function onDeviceReady() {
     pictureSource = navigator.camera.PictureSourceType;
     destinationType = navigator.camera.DestinationType;
+    //Get API key
+    $.get("API_KEY.txt", function(result){KEY = result;});
+}
+
+
+function post_hash(hash) {
+    $.post(POST,{'key': KEY, 'data': hash})
+        .done(
+            function(data){alert(data);}
+        )
+        .fail(
+            function(data){alert("uh, oh...");}
+        );
 }
 
 function genHash(imagePath) {
@@ -21,7 +37,7 @@ function genHash(imagePath) {
     var out = sha256['hex'](c.toDataURL());
     c.width = 0;
     c.height = 0;
-    alert( out );
+    post_hash( out );
 }
 
 function displayPhoto(imagePath) {
