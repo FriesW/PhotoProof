@@ -4,6 +4,7 @@ var KEY;
 
 var LIST_KEY = "PIC_HISTORY";
 var activeList = []; //Each item [txid, UTC, hash, base64pic]
+var updateQueue = []; //Just a bunch of txids
 
 var pictureSource;
 var destinationType;
@@ -89,6 +90,28 @@ function getPhoto() {
     );
 }
 
+function updateItem(txid)
+{
+    get_txid(txid, function(depth){
+        depth = parseInt(depth);
+        if( !isNaN(depth) )
+        {
+            if( depth > 6 )
+            {
+                depth = "6+";
+                updateQueue.splice(updateQueue.indexOf(txid), 1);
+            }
+            var sel = '#' + txid + ' .row1';
+            $(sel).html( '' + depth + $(sel).html().substr(1) );
+        }
+    });
+}
+function updateTimer() {
+    for(var i = 0; i < updateQueue.length; i++)
+        updateItem(updateQueue[i]);
+}
+
+
 function padLeft(nr, n, str){
     return Array(n-String(nr).length+1).join(str||'0')+nr;
 }
@@ -106,12 +129,9 @@ function addItem(item) {
     var img = 'style="background-image: url(' + item[3] + ');"';
     //Set it
     $('#history').prepend( '<li id="' + item[0] + '"><div class="row1">' + top_row + '</div><div class="thumb" ' + img + '></div><div class="row2">' + bot_row + "</div></li>");
-    //Fetch it
-    get_txid(item[0], function(depth){
-        depth = parseInt(depth);
-        depth = Math.min(depth, 6);
-        $('#' + item[0] + ' .row1').html( '' + depth + top_row.substr(1) );
-    });
+    //Update it
+    updateQueue.push(item[0]);
+    updateItem(item[0]);
     
     
 }
@@ -157,6 +177,8 @@ function onDeviceReady() {
         $.get("API_KEY.txt", function(result) {
             KEY = result;
             loadHistory();
+            //Begin update cycle
+            setInterval(updateTimer, 60 * 1000);
         });
     });
 }
