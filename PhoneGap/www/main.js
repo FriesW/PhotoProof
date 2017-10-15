@@ -82,7 +82,7 @@ function onPhotoLoadSuccess(imagePath) {
         post_hash( hash, function(txid){
             hide_slider();
             set_status('Done!');
-            addItem( [txid, ''+Math.round((new Date()).getTime() / 1000), hash, thumbnail(imagePath)] );
+            addItem( [txid, ''+Math.round((new Date()).getTime() / 1000), hash, thumbnail] );
             saveHistory();
         } );
     }
