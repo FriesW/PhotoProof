@@ -1,8 +1,8 @@
 <?php
-$key_file_name = "API_KEY.txt";
-
 function key_check()
 {
+    $key_file_name = "API_KEY.txt";
+    
     if( !isset($_POST["key"]) )
         return false;
     

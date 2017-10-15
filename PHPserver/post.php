@@ -2,10 +2,9 @@
 require 'OP_RETURN.php';
 require 'key_check.php';
 
-$log_file = "announce_log.txt";
-
 function log_transaction($txid, $hash)
 {
+    $log_file = "announce_log.txt";
     file_put_contents($log_file, ''.time().' : '.$txid.' : '.$hash.PHP_EOL, FILE_APPEND | LOCK_EX);
 }
 
