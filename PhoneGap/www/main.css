@@ -70,9 +70,11 @@ button
     width: 100%;
     text-align: center;
     
+    background-color: #9a99b0;
     background-image: url("stripe.png"); /* #9a99b0 with #b3b4bd to #e3e5ff */
     background-repeat: repeat;
-    background-color: #9a99b0;
+    background-position: 0px 0px;
+    animation: animatedBackground 10s linear infinite;
     
     overflow: hidden;
 }
@@ -80,6 +82,10 @@ button
 {
     font-size: 1.2em;
     font-weight: bold;
+}
+@keyframes animatedBackground {
+    from { background-position: 0 0; }
+    to { background-position: 100% 0; }
 }
 
 
