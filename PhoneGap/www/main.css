@@ -16,9 +16,9 @@ body
     top: 0;
     left: 0;
     z-index: 10;
+    overflow: hidden;
     
     background-color: #444444;
-    /*color: grey;*/
     font-weight: bold;
     font-size: 3em;
     text-align: center;

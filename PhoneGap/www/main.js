@@ -1,18 +1,18 @@
 var POST = "http://ice.truman.edu/~wjf4578/PhotoProof/post.php";
+var CHECK = "http://ice.truman.edu/~wjf4578/PhotoProof/check.php";
 var KEY;
 
-document.addEventListener("deviceready", onDeviceReady, false);
+var LIST_KEY = "PIC_HISTORY";
+var activeList = []; //Each item [txid, UTC, hash, base64pic]
 
 var pictureSource;
 var destinationType;
 
-function onDeviceReady() {
-    pictureSource = navigator.camera.PictureSourceType;
-    destinationType = navigator.camera.DestinationType;
-    //Get API key
-    $.get("API_KEY.txt", function(result){KEY = result;});
+function get_txid(txid, callback) {
+    $.post(CHECK,{'key': KEY, 'txid': txid}) 
+        .done( callback )
+        .fail( function(xhr, status, error){alert("CHECK failed: " + status + " " + error);} );
 }
-
 
 function post_hash(hash) {
     $.post(POST,{'key': KEY, 'data': hash})
@@ -20,7 +20,7 @@ function post_hash(hash) {
             function(data){alert(data);}
         )
         .fail(
-            function(data){alert("uh, oh...");}
+            function(xhr, status, error){alert("POST failed: " + status + " " + error);}
         );
 }
 
@@ -68,4 +68,69 @@ function getPhoto() {
          destinationType: destinationType.FILE_URI,
          sourceType: pictureSource.PHOTOLIBRARY}
     );
+}
+
+function addItem(item) {
+    activeList.push(item);
+    
+    //Get date
+    var d = new Date(0);
+    d.setUTCSeconds(item[1]);
+    //Calculate strings
+    var top_row = '?/6 Confirms : ' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + (d.getFullYear() % 100) + ' at ' + d.getHours() + ':' + d.getMinutes();
+    var txid = item[0].substr(0,42) + '...';
+    var hash = item[2].substr(0,42) + '...';
+    var bot_row = txid + "<br>" + hash;
+    var img = "style='background-image: url(" + item[3] + ");'";
+    //Set it
+    $('#history').prepend( '<li id="' + item[0] + '"><div class="row1">' + top_row + '</div><div class="tumb" ' + img + '></div><div class="row2">' + bot_row + "</div></li>");
+    //Fetch it
+    get_txid(item[0], function(depth){
+        depth = parseInt(depth);
+        depth = Math.min(depth, 6);
+        $('#' + item[0] + ' .row1').html( '' + depth + top_row.substr(1) );
+    });
+    
+    
+}
+/*
+function saveHistory() {
+    localStorage.setItem(LIST_KEY, JSON.stringify( activeList ) );
+}
+*/
+function loadHistory() {
+    list = localStorage.getItem(LIST_KEY);
+    if(list === null)
+    {
+        list = [];
+    }
+    else
+    {
+        list = JSON.parse(list);
+    }
+    for(var i = 0; i < list.length; i++)
+    {
+        addItem(list[i]);
+    }
+    //saveHistory();
+}
+
+
+
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady() {
+    $(document).ready(function(){
+        //Get rid of loader
+        $('#loader').fadeOut();
+        //Get media sources
+        pictureSource = navigator.camera.PictureSourceType;
+        destinationType = navigator.camera.DestinationType;
+        //Get API key
+        $.get("API_KEY.txt", function(result) {
+            KEY = result;
+            //loadHistory();
+            addItem( ['febb7c17e4bc926530f1d820518cb83ddd69a103a4ab8746c122e7c226f3c3b2', '1508053612', 'some shit', ''] );
+        });
+    });
 }
