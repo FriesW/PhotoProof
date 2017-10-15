@@ -56,21 +56,18 @@ function thumbnail(imagePath) {
 
 function onPhotoLoadSuccess(imagePath) {
     show_slider();
-    set_status('Loading picture...');
+    set_status('Processing picture...');
     
     //Prepare image
     var img = new Image();
     img.onload = function(){
         //Hash
-        alert("B");
-        set_status('Hashing...');
         var c = document.getElementById('scratch');
         var ctx = c.getContext('2d');
         c.width = this.width / 8;
         c.height = this.height / 8;
         ctx.drawImage(img, 0, 0, c.width, c.height);
         var hash = sha256['hex'](c.toDataURL());
-        alert("C");
         //Thumbnail
         var c = document.getElementById('scratch');
         var ctx = c.getContext('2d');
@@ -81,26 +78,20 @@ function onPhotoLoadSuccess(imagePath) {
             0, 0, c.width, c.height);
         var thumbnail = c.toDataURL('image/jpeg');
         
-        alert(thumbnail);
-        
-        $('img').attr('src',thumbnail);
-        
         set_status('Making transaction...');
-        addItem( ['garbage', ''+Math.round((new Date()).getTime() / 1000), hash, thumbnail] );
-        /*post_hash( hash, function(txid){
+        post_hash( hash, function(txid){
             hide_slider();
             set_status('Done!');
             addItem( [txid, ''+Math.round((new Date()).getTime() / 1000), hash, thumbnail(imagePath)] );
             saveHistory();
-        } );*/
+        } );
     }
-    alert("A");
     img.src = imagePath;
     
 }
 
 function onFail(message) {
-    alert('Failed because: ' + message);
+    //alert('Failed because: ' + message);
 }
 
 function capturePhoto() {
