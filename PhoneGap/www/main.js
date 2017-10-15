@@ -34,26 +34,6 @@ function post_hash(hash, callback) {
         );
 }
 
-/*
-function thumbnail(imagePath) {
-    var c = document.getElementById('scratch');
-    var ctx = c.getContext('2d');
-    var img = new Image();
-    img.onload = function() {
-        var size = Math.min(this.width, this.height);
-        c.width = 75;
-        c.height = 75;
-        ctx.drawImage(img, 0, 0, c.width, c.height);//,
-            //(this.width - size) / 2, (this.height - size) / 2, size, size);
-    }
-    img.src = imagePath;
-    var out = "" + c.toDataURL();
-    c.width = 0;
-    c.height = 0;
-    alert(out);
-    return out;
-}*/
-
 function onPhotoLoadSuccess(imagePath) {
     show_slider();
     set_status('Processing picture...');
