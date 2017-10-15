@@ -74,9 +74,11 @@ function onPhotoLoadSuccess(imagePath) {
         //Thumbnail
         var c = document.getElementById('scratch');
         var ctx = c.getContext('2d');
-        c.width = this.width / 12;
-        c.height = this.height / 12;
-        ctx.drawImage(img, 0, 0, c.width, c.height);
+        var size = Math.min(this.width, this.height);
+        c.width = 70;
+        c.height = 70;
+        ctx.drawImage(img, (this.width - size) / 2, (this.height - size) / 2, size, size,
+            0, 0, c.width, c.height);
         var thumbnail = c.toDataURL('image/jpeg');
         
         alert(thumbnail);

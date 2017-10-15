@@ -108,6 +108,7 @@ li:last-of-type
     position: absolute;
     top: 0.5em; /*The padding*/
     right: 0;
+    background-position: center;
 }
 
 .row1
