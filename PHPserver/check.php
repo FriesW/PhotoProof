@@ -9,6 +9,12 @@ if( isset($_POST["txid"]) and key_check() and preg_match( "/^[a-fA-F0-9]{65}$/",
     $result = shell_exec($cmd_base + $_POST["txid"]);
     if( strpos($result, $error_key) == false )
         echo json_decode($result)->{'confirmations'};
+    else
+        echo "error"; //Response code?
+}
+else
+{
+    echo "error"; //Response code?
 }
 
 
