@@ -8,7 +8,7 @@ function log_transaction($result, $hash)
     $log_file = "announce_log.txt";
     $out = ''.time().' : '.$hash.' : ';
     if( array_key_exists('txids', $result) )
-        $out = $out.'success : '.$result['txids'];
+        $out = $out.'success : '.$result['txids'][0];
     else
         $out = $out.'error : '.$result['error'];
     file_put_contents($log_file, $out.PHP_EOL, FILE_APPEND | LOCK_EX);
@@ -19,7 +19,7 @@ if( isset($_POST["data"]) and preg_match('/^[0-9a-fA-F]{64}$/', $_POST["data"]) 
     $result = OP_RETURN_store($_POST["data"], true);
     log_transaction($result, $_POST["data"]);
     if( array_key_exists('txids', $result) )
-        echo $result['txids'];
+        echo $result['txids'][0];
     else
         echo "error"; //Respone code?
 }
