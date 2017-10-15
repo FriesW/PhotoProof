@@ -71,7 +71,7 @@ button
     text-align: center;
     
     background-color: #9a99b0;
-    background-image: url("stripe.png"); /* #9a99b0 with #b3b4bd to #e3e5ff */
+    /*background-image: url("stripe.png");*/ /* #9a99b0 with #b3b4bd to #e3e5ff */
     background-repeat: repeat;
     background-position: 0px 0px;
     animation: animatedBackground 10s linear infinite;

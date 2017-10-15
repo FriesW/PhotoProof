@@ -8,46 +8,58 @@ var activeList = []; //Each item [txid, UTC, hash, base64pic]
 var pictureSource;
 var destinationType;
 
+function set_status(message) {
+    $('#status div').html(message);
+}
+
+function show_slider() {
+    $('#status').css('background-image', 'url(stripe.png)');
+}
+
+function hide_slider() {
+    $('#status').css('background-image', 'none');
+}
+
 function get_txid(txid, callback) {
     $.post(CHECK,{'key': KEY, 'txid': txid}) 
         .done( callback )
         .fail( function(xhr, status, error){alert("CHECK failed: " + status + " " + error);} );
 }
 
-function post_hash(hash) {
+function post_hash(hash, callback) {
     $.post(POST,{'key': KEY, 'data': hash})
-        .done(
-            function(data){alert(data);}
-        )
+        .done( callback )
         .fail(
-            function(xhr, status, error){alert("POST failed: " + status + " " + error);}
+            function(xhr, status, error){hide_slider(); set_status('Error!'); alert("POST failed: " + status + " " + error);}
         );
 }
 
 function genHash(imagePath) {
+    set_status('Loading picture...');
     var c = document.getElementById('scratch');
     var ctx = c.getContext('2d');
     var img = new Image();
     img.onload = function(){
-        c.width = this.width / 8;
-        c.height = this.height / 8;
+        c.width = this.width / 4;
+        c.height = this.height / 4;
         ctx.drawImage(img, 0, 0, c.width, c.height);
     }
     img.src = imagePath;
+    set_status('Hashing...');
     var out = sha256['hex'](c.toDataURL());
     c.width = 0;
     c.height = 0;
-    post_hash( out );
-}
-
-function displayPhoto(imagePath) {
-    var dest = document.getElementById('img');
-    //dest.style.backgroundImage = "url(data:image/jpeg;base64," + imageData + ")";
-    dest.style.backgroundImage = "url(" + imagePath + ")";
+    set_status('Making transaction...');
+    post_hash( out, function(txid){
+        hide_slider();
+        set_status('Done!');
+        addItem( [txid, ''+Math.round((new Date()).getTime() / 1000), out, ''] );
+        saveHistory();
+    } );
 }
 
 function onPhotoLoadSuccess(imagePath) {
-    displayPhoto(imagePath);
+    show_slider();
     genHash(imagePath);
 }
 
@@ -93,11 +105,17 @@ function addItem(item) {
     
     
 }
-/*
+
+function clearHistory() {
+    activeList = [];
+    saveHistory();
+    $('#history').html(' ');
+}
+
 function saveHistory() {
     localStorage.setItem(LIST_KEY, JSON.stringify( activeList ) );
 }
-*/
+
 function loadHistory() {
     list = localStorage.getItem(LIST_KEY);
     if(list === null)
@@ -112,7 +130,6 @@ function loadHistory() {
     {
         addItem(list[i]);
     }
-    //saveHistory();
 }
 
 
@@ -129,8 +146,7 @@ function onDeviceReady() {
         //Get API key
         $.get("API_KEY.txt", function(result) {
             KEY = result;
-            //loadHistory();
-            addItem( ['febb7c17e4bc926530f1d820518cb83ddd69a103a4ab8746c122e7c226f3c3b2', '1508053612', 'some shit', ''] );
+            loadHistory();
         });
     });
 }
