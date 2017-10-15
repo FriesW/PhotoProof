@@ -93,7 +93,6 @@ function getPhoto() {
 function updateItem(txid)
 {
     get_txid(txid, function(depth){
-        alert("got " + depth);
         depth = parseInt(depth);
         if( !isNaN(depth) )
         {
