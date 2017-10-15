@@ -31,18 +31,6 @@ body
     transform: translateY(-40%);
 }
 
-#img
-{
-    /*background-color: red;
-    background-size: contain;
-    position: absolute;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 100%;
-    width: 100%;
-    top: 15em;*/
-}
-
 #banner
 {
     position: fixed;
@@ -115,7 +103,7 @@ li:last-of-type
 {
     width: 3.5em;
     height: 3.5em;
-    background-color: green;
+    background-color: grey;
     float: right;
     position: absolute;
     top: 0.5em; /*The padding*/

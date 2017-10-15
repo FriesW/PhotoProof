@@ -34,33 +34,67 @@ function post_hash(hash, callback) {
         );
 }
 
-function genHash(imagePath) {
-    set_status('Loading picture...');
+/*
+function thumbnail(imagePath) {
     var c = document.getElementById('scratch');
     var ctx = c.getContext('2d');
     var img = new Image();
-    img.onload = function(){
-        c.width = this.width / 4;
-        c.height = this.height / 4;
-        ctx.drawImage(img, 0, 0, c.width, c.height);
+    img.onload = function() {
+        var size = Math.min(this.width, this.height);
+        c.width = 75;
+        c.height = 75;
+        ctx.drawImage(img, 0, 0, c.width, c.height);//,
+            //(this.width - size) / 2, (this.height - size) / 2, size, size);
     }
     img.src = imagePath;
-    set_status('Hashing...');
-    var out = sha256['hex'](c.toDataURL());
+    var out = "" + c.toDataURL();
     c.width = 0;
     c.height = 0;
-    set_status('Making transaction...');
-    post_hash( out, function(txid){
-        hide_slider();
-        set_status('Done!');
-        addItem( [txid, ''+Math.round((new Date()).getTime() / 1000), out, ''] );
-        saveHistory();
-    } );
-}
+    alert(out);
+    return out;
+}*/
 
 function onPhotoLoadSuccess(imagePath) {
     show_slider();
-    genHash(imagePath);
+    set_status('Loading picture...');
+    
+    //Prepare image
+    var img = new Image();
+    img.onload = function(){
+        //Hash
+        alert("B");
+        set_status('Hashing...');
+        var c = document.getElementById('scratch');
+        var ctx = c.getContext('2d');
+        c.width = this.width / 8;
+        c.height = this.height / 8;
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        var hash = sha256['hex'](c.toDataURL());
+        alert("C");
+        //Thumbnail
+        var c = document.getElementById('scratch');
+        var ctx = c.getContext('2d');
+        c.width = this.width / 12;
+        c.height = this.height / 12;
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        var thumbnail = c.toDataURL('image/jpeg');
+        
+        alert(thumbnail);
+        
+        $('img').attr('src',thumbnail);
+        
+        set_status('Making transaction...');
+        addItem( ['garbage', ''+Math.round((new Date()).getTime() / 1000), hash, thumbnail] );
+        /*post_hash( hash, function(txid){
+            hide_slider();
+            set_status('Done!');
+            addItem( [txid, ''+Math.round((new Date()).getTime() / 1000), hash, thumbnail(imagePath)] );
+            saveHistory();
+        } );*/
+    }
+    alert("A");
+    img.src = imagePath;
+    
 }
 
 function onFail(message) {
@@ -93,9 +127,9 @@ function addItem(item) {
     var txid = item[0].substr(0,42) + '...';
     var hash = item[2].substr(0,42) + '...';
     var bot_row = txid + "<br>" + hash;
-    var img = "style='background-image: url(" + item[3] + ");'";
+    var img = 'style="background-image: url(' + item[3] + ');"';
     //Set it
-    $('#history').prepend( '<li id="' + item[0] + '"><div class="row1">' + top_row + '</div><div class="tumb" ' + img + '></div><div class="row2">' + bot_row + "</div></li>");
+    $('#history').prepend( '<li id="' + item[0] + '"><div class="row1">' + top_row + '</div><div class="thumb" ' + img + '></div><div class="row2">' + bot_row + "</div></li>");
     //Fetch it
     get_txid(item[0], function(depth){
         depth = parseInt(depth);
