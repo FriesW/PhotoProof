@@ -1,17 +1,151 @@
+@import url('https://fonts.googleapis.com/css?family=Oswald|Droid+Sans+Mono');
+
 body
 {
-    background-color: grey;
+    background-color: #8d9196;
     margin: 0;
+    font-family: 'Oswald', sans-serif;
+}
+
+#loader
+{
+    /*display: none;*/
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    
+    background-color: #444444;
+    /*color: grey;*/
+    font-weight: bold;
+    font-size: 3em;
+    text-align: center;
+    vertical-align: text-center;
+}
+#loader div
+{
+    position: relative;
+    top: 50%;
+    transform: translateY(-40%);
 }
 
 #img
 {
-    background-color: red;
+    /*background-color: red;
     background-size: contain;
     position: absolute;
     background-position: center;
     background-repeat: no-repeat;
     height: 100%;
     width: 100%;
-    /*top: 15em;*/
+    top: 15em;*/
 }
+
+#banner
+{
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+    background-color: #babec4;
+    
+    padding: 0;
+    padding-top: 1em;
+}
+
+button
+{
+    width: 39%;
+    height: 4.5em;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#status
+{
+    margin-top: 1em;
+    height: 2em;
+    width: 100%;
+    text-align: center;
+    
+    background-image: url("stripe.png"); /* #9a99b0 with #b3b4bd to #e3e5ff */
+    background-repeat: repeat;
+    background-color: #9a99b0;
+    
+    overflow: hidden;
+}
+#status div
+{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+ul
+{
+    padding-top: 7.5em;/*4.5+1+2*/
+    padding-left: 0.25em;
+    padding-right: 0.5em;
+}
+
+li
+{
+    list-style-type: none;
+    position: relative;
+    height: 3.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-top: 1px dashed #434c59;
+}
+
+li:last-of-type
+{
+    border-bottom: 1px dashed #434c59;
+}
+
+.thumb
+{
+    width: 3.5em;
+    height: 3.5em;
+    background-color: green;
+    float: right;
+    position: absolute;
+    top: 0.5em; /*The padding*/
+    right: 0;
+}
+
+.row1
+{
+    font-size: 1.3em;
+}
+
+.row2
+{
+    position: absolute;
+    left: 0;
+    bottom: 0.5em; /*The padding*/
+    font-size: 0.65em;
+    font-family: 'Droid Sans Mono', monospace;
+}
+
+#clear
+{
+    width: 100%;
+    height: 3em;
+    background-color: #f97575;
+    margin-bottom: 1em;
+    text-align: center;
+    padding: 0;
+    overflow:hidden;
+}
+#clear div
+{
+    font-size: 2em;
+}
+#clear:active
+{
+    background-color: #e96565;
+}
+
