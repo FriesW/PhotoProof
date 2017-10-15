@@ -109,6 +109,9 @@ function getPhoto() {
     );
 }
 
+function padLeft(nr, n, str){
+    return Array(n-String(nr).length+1).join(str||'0')+nr;
+}
 function addItem(item) {
     activeList.push(item);
     
@@ -116,7 +119,7 @@ function addItem(item) {
     var d = new Date(0);
     d.setUTCSeconds(item[1]);
     //Calculate strings
-    var top_row = '?/6 Confirms : ' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + (d.getFullYear() % 100) + ' at ' + d.getHours() + ':' + d.getMinutes();
+    var top_row = '?/6 Confirms : ' + (d.getMonth() + 1) + '/' + d.getDate() + '/' + (d.getFullYear() % 100) + ' at ' + d.getHours() + ':' + padLeft(d.getMinutes(), 2);
     var txid = item[0].substr(0,42) + '...';
     var hash = item[2].substr(0,42) + '...';
     var bot_row = txid + "<br>" + hash;
