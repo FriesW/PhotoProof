@@ -5,7 +5,7 @@
 API_KEY.txt
 
 #Phonegap
-PhoneGap\platforms\
+PhoneGap/platforms/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
