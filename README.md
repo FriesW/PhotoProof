@@ -1,5 +1,7 @@
 # PhotoProof
-A project for the 2017 [Tiger-Hacks](http://tiger-hacks.com/) hackathon.
+A project for the 2017 [Tiger-Hacks](http://tiger-hacks.com/) hackathon. Is also on [Devpost](https://devpost.com/software/photoproof).
+
+Overall first place winner!
 
 ## Inspiration
 
