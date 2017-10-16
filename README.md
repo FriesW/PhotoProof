@@ -52,3 +52,7 @@ Possible future expansion:
 * Have the ability to select and assure which metadata is kept with the photo when being hashed. For example, GPS co-ordinates.
 * Some other simple features could be added, like wifi direct for submitting photos directly from a DSLR camera.
 * The client software should be rewritten in Android studio or some other 'native' language. Some steps in the hashing process are unacceptably slow, especially with large photos.
+
+## Screenshot
+
+![screenshot](https://github.com/FriesW/PhotoProof/raw/master/screenshot.png)
